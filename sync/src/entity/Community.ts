@@ -3,7 +3,8 @@ import {
     Column,
     PrimaryGeneratedColumn,
     OneToMany,
-    JoinColumn,
+    CreateDateColumn,
+    UpdateDateColumn,
 } from "typeorm"
 import { Capacitable } from "./Capacitable"
 
@@ -14,6 +15,12 @@ export class Community {
 
     @Column()
     name: string
+
+    @CreateDateColumn()
+    createdAt: Date
+
+    @UpdateDateColumn()
+    updatedAt: Date
 
     @OneToMany(() => Capacitable, (capacitable) => capacitable.community)
     capacitables: Capacitable[]

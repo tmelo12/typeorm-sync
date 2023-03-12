@@ -1,11 +1,14 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, ManyToMany, JoinTable } from "typeorm"
+import { Entity, Column, Generated, ManyToOne, CreateDateColumn, ManyToMany, UpdateDateColumn, PrimaryColumn, JoinTable } from "typeorm"
 import { Community } from "./Community"
 import { Capabilitie } from "./Capabilitie"
-
-@Entity()
+@Entity({
+    name: 'Capacitables',
+})
 export class Capacitable {
-    @PrimaryGeneratedColumn()
-    id: number
+    @Column()
+    @Generated("uuid")
+    @PrimaryColumn()
+    id: string
 
     @Column()
     name: string
@@ -14,5 +17,14 @@ export class Capacitable {
     community: Community
 
     @ManyToMany(() => Capabilitie, (capabilitie) => capabilitie.capacitables)
+    @JoinTable({
+        name: "CapabilitiesOfPeople",
+    })
     capabilities: Capabilitie[]
+
+    @CreateDateColumn()
+    createdAt: Date
+
+    @UpdateDateColumn()
+    updatedAt: Date
 }

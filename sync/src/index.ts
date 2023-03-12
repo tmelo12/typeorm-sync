@@ -1,3 +1,4 @@
+import { MoreThan } from "typeorm"
 import { AppDataSource } from "./data-source"
 import { Capabilitie } from "./entity/Capabilitie"
 import { Capacitable } from "./entity/Capacitable"
@@ -25,29 +26,10 @@ AppDataSource.initialize().then(async () => {
     capacitable.community = community
     await AppDataSource.manager.save(capacitable)
 
+    const capacitable2 = new Capacitable()
+    capacitable2.name = "Matheus"
+    capacitable2.capabilities = [capabilitie1, capabilitie2]
+    capacitable2.community = community
+    await AppDataSource.manager.save(capacitable2)
 
-    const capacitableInfo = await AppDataSource.getRepository(Capacitable).findOne({
-        where: {
-            id: 1,
-        },
-        relations: {
-            capabilities: true,
-            community: true
-        },
-    })
-
-    const communityInfo = await AppDataSource.getRepository(Community).findOne({
-        where: {
-            id: 1,
-        },
-        relations: {
-            capacitables: {
-                capabilities: true
-            }
-        },
-    })
-
-    console.log('Capacitable Info: ', capacitableInfo)
-
-    console.log('Community Info', communityInfo)
 }).catch(error => console.log(error))
