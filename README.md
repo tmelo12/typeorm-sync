@@ -1,1 +1,1 @@
-# typeorm-sync
+# Sincronização com typeorm
